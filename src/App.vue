@@ -1,9 +1,17 @@
 <template>
-  <div class="w-4/5">
-    <h1>Sultan Yevgenii</h1>
+  <div class="w-4/5 m-auto bg-white rounded-xl shadow-xl mt-14">
+    <Header />
+    
+    <div class="p-10">
+      <h2 class="text-3xl font-bold mb-8">Все кроссовки</h2>
+      <CardList />
+    </div>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import Header from './components/Header.vue'
+import CardList from './components/CardList.vue'
+</script>
 
 <style scoped></style>
