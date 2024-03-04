@@ -1,9 +1,11 @@
 <template>
   <div class="grid grid-cols-4 gap-5">
     <Card
-      image-url="/sneakers/sneakers-1.jpg"
-      title="Мужские кроссовки Nike Blazer Mid Suede"
-      :price="12990"
+      v-for="item in items"
+      :key="item.id"
+      :image-url="item.imageUrl"
+      :title="item.title"
+      :price="item.price"
       :is-added="true"
       :is-favorite="true"
       :onClickAdd="onClickAdd"
@@ -21,4 +23,8 @@ const onClickAdd = () => {
 const onFavoriteAdd = () => {
   alert('Favorite')
 }
+
+defineProps({
+  items: Array
+})
 </script>
