@@ -33,7 +33,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, provide, ref, watch } from 'vue'
 import Header from './components/Header.vue'
 import CardList from './components/CardList.vue'
 import axios from 'axios'
@@ -51,6 +51,29 @@ const onChengeSearchInput = (event) => {
   filters.value.searchQuery = event.target.value
 }
 
+const fetchFavotits = async () => {
+  try {
+    const { data: favorites } = await axios.get('https://50e3fbb143621017.mokky.dev/favorites')
+    items.value = items.value.map((item) => {
+      const favorite = favorites.find((favorite) => favorite.parentId === item.id)
+      if (!favorite) {
+        return item
+      }
+      return {
+        ...item,
+        isFavorite: true,
+        favoriteId: favorite.id
+      }
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const addToFavorite = async (item) => {
+  item.isFavorite = true
+}
+
 const fetchItems = async () => {
   try {
     const params = {
@@ -63,19 +86,28 @@ const fetchItems = async () => {
     const { data } = await axios.get('https://50e3fbb143621017.mokky.dev/items', {
       params
     })
-    items.value = data
+    items.value = data.map((item) => ({
+      ...item,
+      isFavorite: false,
+      isAdded: false
+    }))
+    console.log(items.value)
   } catch (error) {
     console.log(error)
   }
 }
 
-onMounted(fetchItems)
+onMounted(async () => {
+  await fetchItems()
+  await fetchFavotits()
+})
 /*   fetch('https://50e3fbb143621017.mokky.dev/items')
     .then((res) => res.json())
     .then((res) => items.value.push(...res)) */
 /* axios.get('https://50e3fbb143621017.mokky.dev/items').then((res) => items.value.push(...res.data)) */
 
 watch(filters.value, fetchItems)
+provide('addToFavorite', addToFavorite)
 </script>
 
 <style scoped></style>

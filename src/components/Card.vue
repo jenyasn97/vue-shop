@@ -25,13 +25,16 @@
 </template>
 
 <script setup>
+import { inject } from 'vue'
+
+const addToFavorite = inject('addToFavorite')
+
 defineProps({
   imageUrl: String,
   title: String,
   price: Number,
   isFavorite: Boolean,
   isAdded: Boolean,
-  onClickAdd: Function,
-  onFavoriteAdd: Function
+  onClickAdd: Function
 })
 </script>
