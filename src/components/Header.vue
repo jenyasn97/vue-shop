@@ -9,9 +9,18 @@
     </div>
 
     <ul class="flex items-center gap-10">
-      <li class="flex items-center cursor-pointer gap-3 text-gray-500 hover:text-black">
+      <li
+        @click="emit('openDrawer')"
+        class="flex items-center cursor-pointer gap-3 text-gray-500 hover:text-black"
+      >
         <img src="/cart.svg" alt="Cart" />
-        <b>1250 руб.</b>
+        <b
+          >{{
+            cartArr.reduce((acc, item) => acc + item.price, 0) +
+            cartArr.reduce((acc, item) => acc + item.price, 0) * 0.05
+          }}
+          руб.</b
+        >
       </li>
       <li class="flex items-center cursor-pointer gap-3 text-gray-500 hover:text-black">
         <img src="/heart.svg" alt="Heart" />
@@ -24,3 +33,10 @@
     </ul>
   </header>
 </template>
+
+<script setup>
+const emit = defineEmits(['openDrawer'])
+defineProps({
+  cartArr: Array
+})
+</script>

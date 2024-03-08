@@ -1,6 +1,7 @@
 <template>
   <div class="flex gap-4 items-center pl-1">
     <svg
+      @click="closeDrawer"
       class="rotate-180 cursor-pointer opacity-30 hover:opacity-100 transition hover:-translate-x-1"
       width="16"
       height="14"
@@ -26,3 +27,9 @@
     <h2 class="text-2xl font-bold">Корзина</h2>
   </div>
 </template>
+
+<script setup>
+import { inject } from 'vue'
+
+const { closeDrawer } = inject('cart')
+</script>

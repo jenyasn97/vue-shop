@@ -6,15 +6,30 @@
 
     <div class="flex flex-col gap-4 mt-auto">
       <div class="flex gap-2">
-        <span>Итого:</span>
+        <span>Сумма без налога:</span>
         <div class="flex-1 border-b border-dashed"></div>
-        <b> 12990 р.</b>
+        <b> {{ cartArr.reduce((acc, item) => acc + item.price, 0) }} р.</b>
       </div>
       <div class="flex gap-2">
         <span>Налог 5%:</span>
         <div class="flex-1 border-b border-dashed"></div>
-        <b> 900 р.</b>
+        <b>
+          {{ (cartArr.reduce((acc, item) => acc + item.price, 0) * 0.05).toFixed(2) }}
+          р.</b
+        >
       </div>
+      <div class="flex gap-2">
+        <span>Итого:</span>
+        <div class="flex-1 border-b border-dashed"></div>
+        <b>
+          {{
+            cartArr.reduce((acc, item) => acc + item.price, 0) +
+            cartArr.reduce((acc, item) => acc + item.price, 0) * 0.05
+          }}
+          р.</b
+        >
+      </div>
+
       <button
         disabled
         class="w-full bg-lime-500 py-3 rounded-xl mt-4 text-white disabled:bg-slate-300 hover:bg-lime-600 active:bg-lime-700 transition cursor-pointer"
@@ -28,4 +43,8 @@
 <script setup>
 import DrawerHeade from './DrawerHeade.vue'
 import CartItemList from './CartItemList.vue'
+
+defineProps({
+  cartArr: Array
+})
 </script>

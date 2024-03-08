@@ -1,8 +1,8 @@
 <template>
-  <!-- <Drawer /> -->
+  <Drawer v-if="drawerOpen" :cart-arr="cart" />
 
   <div class="w-4/5 m-auto bg-white rounded-xl shadow-xl mt-14">
-    <Header />
+    <Header @open-drawer="openDrawer" :cart-arr="cart" />
 
     <div class="p-10">
       <div class="flex justify-between items-center mb-8">
@@ -27,7 +27,7 @@
           </div>
         </div>
       </div>
-      <CardList :items="items" />
+      <CardList :items="items" @add-to-card="addToCard" />
     </div>
   </div>
 </template>
@@ -37,10 +37,38 @@ import { onMounted, provide, ref, watch } from 'vue'
 import Header from './components/Header.vue'
 import CardList from './components/CardList.vue'
 import axios from 'axios'
-/* import Drawer from './components/Drawer.vue'
- */
+import Drawer from './components/Drawer.vue'
 
 let items = ref([])
+const drawerOpen = ref(false)
+
+const cart = ref([])
+
+const closeDrawer = () => {
+  drawerOpen.value = false
+}
+
+const openDrawer = () => {
+  drawerOpen.value = true
+}
+
+const addToCard = (item) => {
+  cart.value.push(item)
+  item.isAdded = true
+}
+const removeFromCard = (item) => {
+  cart.value.splice(cart.value.indexOf(item), 1)
+  item.isAdded = false
+  console.log('click');
+}
+
+const onClickAddPlus = (item) => {
+  if (!item.isAdded) {
+    addToCard(item)
+  } else {
+    removeFromCard(item)
+  }
+}
 
 const filters = ref({ sortBy: 'title', searchQuery: '' })
 const onChengeSelect = (event) => {
@@ -76,12 +104,13 @@ const addToFavorite = async (item) => {
       const obj = {
         parentId: item.id
       }
-      const { data } = await axios.post('https://50e3fbb143621017.mokky.dev/favorites', obj)
       item.isFavorite = true
+      const { data } = await axios.post('https://50e3fbb143621017.mokky.dev/favorites', obj)
+
       item.favoriteId = data.id
     } else {
-      await axios.delete(`https://50e3fbb143621017.mokky.dev/favorites/${+item.favoriteId}`)
       item.isFavorite = false
+      await axios.delete(`https://50e3fbb143621017.mokky.dev/favorites/${+item.favoriteId}`)
       item.favoriteId = null
     }
   } catch (error) {
@@ -104,6 +133,7 @@ const fetchItems = async () => {
     items.value = data.map((item) => ({
       ...item,
       isFavorite: false,
+      favoriteId: null,
       isAdded: false
     }))
   } catch (error) {
@@ -122,6 +152,13 @@ onMounted(async () => {
 
 watch(filters.value, fetchItems)
 provide('addToFavorite', addToFavorite)
+provide('cart', {
+  cart,
+  closeDrawer,
+  openDrawer,
+  removeFromCard
+})
+provide('add-to-card', onClickAddPlus)
 </script>
 
 <style scoped></style>

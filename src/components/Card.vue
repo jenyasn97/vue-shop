@@ -25,6 +25,7 @@
 </template>
 
 <script setup>
+
 defineProps({
   id: Number,
   imageUrl: String,
@@ -32,6 +33,7 @@ defineProps({
   price: Number,
   isFavorite: Boolean,
   isAdded: Boolean,
-  onClickFavorite: Function
+  onClickFavorite: Function,
+  onClickAdd: Function
 })
 </script>

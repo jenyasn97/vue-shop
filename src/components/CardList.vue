@@ -10,6 +10,11 @@
       :is-added="item.isAdded"
       :is-favorite="item.isFavorite"
       :onClickFavorite="() => addToFavorite(item)"
+      :on-click-add="
+        () => {
+          addToCard(item)
+        }
+      "
     />
   </div>
 </template>
@@ -18,7 +23,7 @@
 import Card from './Card.vue'
 import { inject } from 'vue'
 const addToFavorite = inject('addToFavorite')
-
+const addToCard = inject('add-to-card')
 
 defineProps({
   items: Array
