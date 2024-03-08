@@ -3,32 +3,24 @@
     <Card
       v-for="item in items"
       :key="item.id"
+      :id="item.id"
       :image-url="item.imageUrl"
       :title="item.title"
       :price="item.price"
       :is-added="item.isAdded"
       :is-favorite="item.isFavorite"
-      :onClickAdd="onClickAdd"
-      :onFavoriteAdd="onFavoriteAdd"
+      :onClickFavorite="() => addToFavorite(item)"
     />
   </div>
 </template>
 
 <script setup>
-import { inject } from 'vue'
 import Card from './Card.vue'
+import { inject } from 'vue'
+const addToFavorite = inject('addToFavorite')
 
-const onClickAdd = () => {
-  alert('Add')
-}
-const onFavoriteAdd = () => {
-  alert('Favorite')
-  addToFavorite()
-}
 
 defineProps({
   items: Array
 })
-
-inject('addToFavorite')
 </script>
