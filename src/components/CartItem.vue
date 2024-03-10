@@ -1,5 +1,5 @@
 <template>
-  <div class="flex gap-4 border border-slate-200 rounded-xl p-4 mt-4 items-center">
+  <div class="flex justify-between gap-4 border border-slate-200 rounded-xl p-4 mt-4 items-center">
     <img class="w-16 h-16" :src="item.imageUrl" :alt="item.title" />
 
     <div class="flex justify-between flex-col">
