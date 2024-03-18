@@ -14,13 +14,7 @@
         class="flex items-center cursor-pointer gap-3 text-gray-500 hover:text-black"
       >
         <img src="/cart.svg" alt="Cart" />
-        <b
-          >{{
-            cartArr.reduce((acc, item) => acc + item.price, 0) +
-            cartArr.reduce((acc, item) => acc + item.price, 0) * 0.05
-          }}
-          руб.</b
-        >
+        <b>{{ totalPrice }} руб.</b>
       </li>
       <li class="flex items-center cursor-pointer gap-3 text-gray-500 hover:text-black">
         <img src="/heart.svg" alt="Heart" />
@@ -37,6 +31,6 @@
 <script setup>
 const emit = defineEmits(['openDrawer'])
 defineProps({
-  cartArr: Array
+  totalPrice: Number
 })
 </script>

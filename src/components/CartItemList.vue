@@ -1,5 +1,4 @@
 <template>
-  <div class="flex flex-col"></div>
   <CartItem
     v-for="item in cart"
     :key="item.id"
