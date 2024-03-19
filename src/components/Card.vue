@@ -1,6 +1,7 @@
 <template>
   <div
     class="flex flex-col justify-between relative bg-white border border-slate-100 rounded-3xl p-8 cursor-pointer hover:-translate-y-2 hover:shadow-xl transition"
+    
   >
     <img
       @click="onClickFavorite"

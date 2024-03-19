@@ -1,10 +1,12 @@
 <template>
-  <CartItem
-    v-for="item in cart"
-    :key="item.id"
-    :item="item"
-    @on-click-remove="() => removeFromCard(item)"
-  />
+  <div v-auto-animate>
+    <CartItem
+      v-for="item in cart"
+      :key="item.id"
+      :item="item"
+      @on-click-remove="() => removeFromCard(item)"
+    />
+  </div>
 </template>
 
 <script setup>
