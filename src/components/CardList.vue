@@ -9,11 +9,13 @@
       :price="item.price"
       :is-added="item.isAdded"
       :is-favorite="item.isFavorite"
-      :onClickFavorite="() => addToFavorite(item)"
+      :onClickFavorite="isFavorites ? null : () => addToFavorite(item)"
       :on-click-add="
-        () => {
-          addToCard(item)
-        }
+        isFavorites
+          ? null
+          : () => {
+              addToCard(item)
+            }
       "
     />
   </div>
@@ -26,6 +28,7 @@ const addToFavorite = inject('addToFavorite')
 const addToCard = inject('add-to-card')
 
 defineProps({
-  items: Array
+  items: Array,
+  isFavorites: Boolean
 })
 </script>
