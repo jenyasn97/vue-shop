@@ -1,5 +1,5 @@
 <template>
-  <div v-auto-animate>
+  <div v-auto-animate class="d-block">
     <CartItem
       v-for="item in cart"
       :key="item.id"

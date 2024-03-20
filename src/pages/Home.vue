@@ -28,7 +28,7 @@
 import { inject, ref, watch, onMounted, provide } from 'vue'
 import CardList from '../components/CardList.vue'
 import axios from 'axios'
-
+import debounce from 'lodash.debounce'
 const { addToCard, removeFromCard, cart } = inject('cart')
 
 const filters = ref({ sortBy: 'title', searchQuery: '' })
@@ -46,9 +46,9 @@ const onChengeSelect = (event) => {
   filters.value.sortBy = event.target.value
 }
 
-const onChengeSearchInput = (event) => {
+const onChengeSearchInput = debounce((event) => {
   filters.value.searchQuery = event.target.value
-}
+}, 1000)
 
 const addToFavorite = async (item) => {
   try {
